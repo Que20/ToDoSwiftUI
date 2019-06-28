@@ -10,7 +10,7 @@ import SwiftUI
 import Combine
 
 struct ContentView : View {
-    @EnvironmentObject var viewModel: TodoViewModel
+    @ObjectBinding var viewModel: TodoViewModel = TodoViewModel()
     
     var body: some View {
         NavigationView {
@@ -18,21 +18,22 @@ struct ContentView : View {
                 NavigationButton(destination: TodoView(todo: todo)) {
                     TodoCell(todo: todo)
                 }
-                }
-                .navigationBarTitle(Text("Todo"))
-                .navigationBarItems(leading:
-                    Button(action: {
-                        self.viewModel.shuffle()
-                    }, label: {
-                        Text("Shuffle")
-                    }),
-                                    trailing:
-                    Button(action: {
-                        self.viewModel.load()
-                    }, label: {
-                        Image(systemName: "arrow.2.circlepath")
-                    })
+            }
+            .navigationBarTitle(Text("Todo"))
+            .navigationBarItems(leading:
+                Button(action: {
+                    self.viewModel.shuffle()
+                }, label: {
+                    Text("Shuffle")
+                }), trailing:
+                Button(action: {
+                    self.viewModel.load()
+                }, label: {
+                    Image(systemName: "arrow.2.circlepath")
+                })
             )
+        }.onAppear {
+            self.viewModel.load()
         }
     }
 }
