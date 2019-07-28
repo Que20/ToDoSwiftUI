@@ -15,7 +15,7 @@ struct ContentView : View {
     var body: some View {
         NavigationView {
             List(self.viewModel.todos) { todo in
-                NavigationButton(destination: TodoView(todo: todo)) {
+                NavigationLink(destination: TodoView(todo: todo)) {
                     TodoCell(todo: todo)
                 }
             }

@@ -11,11 +11,11 @@ import SwiftUI
 import Combine
 
 public class TodoViewModel: BindableObject {
-    public let didChange = PassthroughSubject<TodoViewModel, Never>()
+    public let willChange = PassthroughSubject<TodoViewModel, Never>()
     
     var todos: Todos = [Todo]() {
         didSet {
-            didChange.send(self)
+            willChange.send(self)
         }
     }
     

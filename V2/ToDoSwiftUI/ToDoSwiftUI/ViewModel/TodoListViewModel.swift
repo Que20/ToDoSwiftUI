@@ -11,11 +11,11 @@ import SwiftUI
 import Combine
 
 public class TodoListViewModel: BindableObject {
-    public let didChange = PassthroughSubject<TodoListViewModel, Never>()
+    public let willChange = PassthroughSubject<TodoListViewModel, Never>()
     
     var todos: Todos = [Todo]() {
         didSet {
-            didChange.send(self)
+            willChange.send(self)
         }
     }
     
@@ -29,7 +29,7 @@ public class TodoListViewModel: BindableObject {
     
     func markDone(id: Int) {
         self.todos.first(where: { $0.id == id })?.completed.toggle()
-        self.didChange.send(self)
+        self.willChange.send(self)
     }
     
     func pin(id: Int) {
