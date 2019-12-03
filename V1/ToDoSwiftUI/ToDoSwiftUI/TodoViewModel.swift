@@ -10,14 +10,9 @@ import Foundation
 import SwiftUI
 import Combine
 
-public class TodoViewModel: BindableObject {
-    public let willChange = PassthroughSubject<TodoViewModel, Never>()
+public class TodoViewModel: ObservableObject {
     
-    var todos: Todos = [Todo]() {
-        didSet {
-            willChange.send(self)
-        }
-    }
+    @Published var todos: Todos = [Todo]()
     
     func shuffle() {
         self.todos = self.todos.shuffled()

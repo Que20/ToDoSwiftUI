@@ -10,7 +10,7 @@ import SwiftUI
 import Combine
 
 struct ContentView : View {
-    @ObjectBinding var viewModel: TodoViewModel = TodoViewModel()
+    @ObservedObject var viewModel: TodoViewModel = TodoViewModel()
     
     var body: some View {
         NavigationView {
