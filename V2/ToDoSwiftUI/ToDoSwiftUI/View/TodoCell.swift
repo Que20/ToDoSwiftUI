@@ -19,14 +19,14 @@ struct TodoCell : View {
             // NOT USING BUTTONS BUT IMAGE + TAP ACTION
             // BUG W/ Buttons in List
             
-            Image(systemName: (self.todoCellViewModel.isComleted() ? "checkmark.square" : "square")).tapAction {
+            Image(systemName: (self.todoCellViewModel.isComleted() ? "checkmark.square" : "square")).onTapGesture {
                 self.markDoneAction(self.todoCellViewModel.getId())
             }
             
             Text(self.todoCellViewModel.getTitle())
             Spacer()
             
-            Image(systemName: (self.todoCellViewModel.isPinned() ? "pin.fill" : "pin")).tapAction {
+            Image(systemName: (self.todoCellViewModel.isPinned() ? "pin.fill" : "pin")).onTapGesture {
                 self.pinAction(self.todoCellViewModel.getId())
             }
             //.padding(.trailing, 10)

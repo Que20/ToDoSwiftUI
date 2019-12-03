@@ -10,7 +10,7 @@ import SwiftUI
 import Combine
 
 struct ContentView : View {
-    @EnvironmentObject var viewModel: TodoListViewModel
+    @ObservedObject var viewModel: TodoListViewModel = TodoListViewModel()
     
     var body: some View {
         NavigationView {
@@ -33,6 +33,9 @@ struct ContentView : View {
                         Image(systemName: "arrow.2.circlepath")
                     })
             )
+        }
+        .onAppear {
+            self.viewModel.load()
         }
     }
 }

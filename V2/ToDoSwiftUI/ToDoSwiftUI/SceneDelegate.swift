@@ -20,12 +20,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
         // Use a UIHostingController as window root view controller
-        let window = UIWindow(frame: UIScreen.main.bounds)
-        let viewModel = TodoListViewModel()
-        viewModel.load()
-        window.rootViewController = UIHostingController(rootView: ContentView().environmentObject(viewModel))
-        self.window = window
-        window.makeKeyAndVisible()
+        let viewController = UIHostingController(rootView: ContentView())
+        
+        guard let _ = (scene as? UIWindowScene) else { return }
+        if let windowScene = scene as? UIWindowScene {
+            self.window = UIWindow(windowScene: windowScene)
+            self.window!.rootViewController = viewController
+            self.window!.makeKeyAndVisible()
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

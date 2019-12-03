@@ -10,14 +10,9 @@ import Foundation
 import SwiftUI
 import Combine
 
-public class TodoListViewModel: BindableObject {
-    public let willChange = PassthroughSubject<TodoListViewModel, Never>()
+public class TodoListViewModel: ObservableObject {
     
-    var todos: Todos = [Todo]() {
-        didSet {
-            willChange.send(self)
-        }
-    }
+    @Published var todos: Todos = [Todo]()
     
     func shuffle() {
         self.todos = self.todos.shuffled()
@@ -25,15 +20,21 @@ public class TodoListViewModel: BindableObject {
     
     func sort() {
         self.todos = self.todos.sorted(by: { ($0.pinned ?? false) && (!($1.pinned ?? false)) })
+        self.objectWillChange.send()
     }
     
     func markDone(id: Int) {
         self.todos.first(where: { $0.id == id })?.completed.toggle()
-        self.willChange.send(self)
+        self.objectWillChange.send()
     }
     
     func pin(id: Int) {
-        self.todos.first(where: { $0.id == id })?.pinned?.toggle()
+        let item = self.todos.first(where: { $0.id == id })
+        if let _ = item?.pinned {
+            item?.pinned?.toggle()
+        } else {
+            item?.pinned = true
+        }
         self.sort()
     }
     
